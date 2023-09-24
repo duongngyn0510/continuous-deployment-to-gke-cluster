@@ -1,0 +1,59 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-nginx-ingress
+  namespace: model-serving
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: retrieval.com
+      http:
+        paths:
+        - path: /docs
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}
+              port:
+                number: 30000
+
+        - path: /openapi.json
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}
+              port:
+                number: 30000
+
+        - path: /image_url
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}
+              port:
+                number: 30000
+
+        - path: /display_image
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}
+              port:
+                number: 30000
+
+        - path: /text_url
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}
+              port:
+                number: 30000
+
+        - path: /display_text
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Release.Name }}
+              port:
+                number: 30000

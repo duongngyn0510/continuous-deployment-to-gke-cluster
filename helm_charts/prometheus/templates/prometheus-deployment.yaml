@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: monitoring
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: prom/prometheus
+          args:
+            - "--storage.tsdb.retention.time=12h"
+            - "--config.file=/etc/prometheus/prometheus.yaml"
+            - "--storage.tsdb.path=/prometheus/"
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-config-volume
+              mountPath: /etc/prometheus/
+            - name: prometheus-storage-volume
+              mountPath: /prometheus/
+      volumes:
+        - name: prometheus-config-volume
+          configMap:
+            defaultMode: 420
+            name: prometheus-server-conf
+
+        - name: prometheus-storage-volume
+          emptyDir: {}

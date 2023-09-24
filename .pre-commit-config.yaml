@@ -1,0 +1,25 @@
+exclude: "^\
+  (third-party/.*)\
+  "
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+
+  # Format Python files
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+
+  # Sort the order of importing libs
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: [--profile=black]

@@ -1,0 +1,12 @@
+apiVersion: v2
+name: prometheus
+description: my helm chart for prometheus monitoring retrieval app
+
+type: application
+
+version: 0.1.0
+appVersion: "1.0.0"
+
+maintainers:
+- email: duong05102002@gmail.com
+  name: duongnguyen
