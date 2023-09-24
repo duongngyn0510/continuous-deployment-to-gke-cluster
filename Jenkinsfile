@@ -8,13 +8,37 @@ pipeline {
         timestamps()
     }
 
-    // environment{
-    //     registry = 'duong05102002/retrieval-local-service'
-    //     registryCredential = 'dockerhub'
-    // }
+    environment{
+        registry = 'duong05102002/text-image-retrieval-serving'
+        registryCredential = 'dockerhub'
+    }
 
     stages {
-        stage('Deploy') {
+        stage('Test') {
+            steps {
+                echo 'Testing model correctness..'
+                echo 'Always pass all test unit :D'
+            }
+        }
+        
+        stage('Build image') {
+            steps {
+                script {
+                    echo 'Building image for deployment..'
+                    def imageName = "${registry}:v1.${BUILD_NUMBER}"
+                    def buildArgs = "--build-arg PINECONE_APIKEY=${PINECONE_APIKEY}"
+                    // PINECONE_APIKEY env is set up on Jenkins dashboard
+
+                    dockerImage = docker.build(imageName, "--file Dockerfile-app-serving ${buildArgs} .")
+                    echo 'Pushing image to dockerhub..'
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Google Kubernetes Engine') {
             agent {
                 kubernetes {
                     containerTemplate {

@@ -1,0 +1,10 @@
+fastapi==0.96.0
+gdown
+imagehash==4.3.1
+loguru
+pinecone-client
+python-dotenv
+python-multipart==0.0.6
+torch==1.13.1
+torchvision
+uvicorn[standard]==0.22.0
