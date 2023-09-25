@@ -32,7 +32,7 @@ Prometheus will scrape metrics from the running application pods and nodes in GK
 ![](images/jenkins_cicd.png)
 
 ## Test API
-### 1. Update nginx ingress domain
+Update nginx ingress domain
 ```bash
 sudo nano /etc/hosts
 ```
