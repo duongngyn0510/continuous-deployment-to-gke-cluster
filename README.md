@@ -3,8 +3,9 @@
 ![](images/architecture.png)
 
 ## GKE Cluster
-+ Unable Autopilot for the cluster. When using Autopilot cluster, certain features of Standard GKE are not available, ex scraping metrics job of Prometheus service.
++ Using `terraform` to create GKE cluster.
 + GKE cluster is deployed at *us-central1-f* with its node machine type is: *n2-standard-2* (2 CPU and 8 GB RAM).
++ Unable Autopilot for the cluster. When using Autopilot cluster, certain features of Standard GKE are not available, ex scraping metrics job of Prometheus service.
 
 ### Serving Service
 + The requests will initially arrive at the Nginx Ingress Gateway and will subsequently be routed to the service within the `model-serving` namespace of the GKE cluster.
@@ -21,7 +22,7 @@ Prometheus will scrape metrics from the running application pods and nodes in GK
 
 ## CI/CD using Jenkins
 
-+ Jenkins is deployed on Google Compute Engine with a machine type is *n1-standard-2*.
++ Jenkins is deployed on Google Compute Engine (create Google Compute instance using `ansible`) with a machine type is *n1-standard-2*.
 + Install **Helm** on Jenkins using the `Dockerfile-jenkins-k8s` to enable application deployment on GKE cluster.
 + The CI/CD pipeline will consist of three stages:
     + Tesing model correctness.
