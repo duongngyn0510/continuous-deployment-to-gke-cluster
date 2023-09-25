@@ -19,7 +19,6 @@ Prometheus will scrape metrics from the running application pods and nodes in GK
 + CPU and RAM usage in Node
 ![](images/node_metrics.png)
 
-
 ## CI/CD using Jenkins
 
 + Jenkins is deployed on Google Compute Engine with a machine type is *n1-standard-2*.
