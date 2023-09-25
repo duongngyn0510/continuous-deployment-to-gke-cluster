@@ -1,30 +1,42 @@
 - name: Create a Compute Engine instance
   hosts: localhost
   tasks:
+    - name: create a disk
+      gcp_compute_disk:
+        name: disk-instance
+        size_gb: 50
+        source_image: projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230727
+        zone: us-central1-f
+        project: mle-course-398013
+        auth_kind: serviceaccount
+        service_account_file: ../secret_keys/mle-course-398013-80ecbd13cd59.json
+        state: present
+      register: disk
+
     - name: Start an instance
       gcp_compute_instance:
-        name: instance-1
-        machine_type: e2-medium
-        # Refer to https://cloud.google.com/compute/docs/images/os-details#ubuntu_lts
-        # or use the command `gcloud compute images list --project=ubuntu-os-cloud`
+        name: jenkins-instance
+        machine_type: n1-standard-2
         zone: us-central1-f
-        project: 	mle-course-398013
-        # The service account is needed to create the resources
+        project: mle-course-398013
         auth_kind: serviceaccount
         service_account_file: ../secret_keys/mle-course-398013-80ecbd13cd59.json
         disks:
-          - auto_delete: true
-            boot: true
-            initialize_params:
-              source_image: projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230727
-        # We use the default network with an external IP for SSH
+        - auto_delete: 'true'
+          boot: 'true'
+          source: "{{ disk }}"
+        - auto_delete: 'true'
+          interface: NVME
+          type: SCRATCH
+          initialize_params:
+            disk_type: local-ssd
         network_interfaces:
           - network:
               selfLink: global/networks/default
             access_configs:
               - name: External NAT
                 type: ONE_TO_ONE_NAT
-        state: present # change to absent to delete the instance
+        state: present
 
     - name: Create inbound firewall rule for port 8081 and 50000
       gcp_compute_firewall:
@@ -37,8 +49,8 @@
               - 8081
               - 50000
         source_ranges:
-          - 0.0.0.0/0 # Allow traffic from any source (use a more specific source range for security)
-        direction: INGRESS # Direction from outside to inside, EGRESS is the opposite direction
+          - 0.0.0.0/0 
+        direction: INGRESS 
         description: Allow incoming traffic on port 50000 and 8081 (Jenkins UI)
         project: mle-course-398013
         auth_kind: serviceaccount
