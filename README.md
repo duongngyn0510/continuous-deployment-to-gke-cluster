@@ -32,4 +32,21 @@ Prometheus will scrape metrics from the running application pods and nodes in GK
 ![](images/jenkins_cicd.png)
 
 ## Test API
-### 1.
+### 1. Update nginx ingress domain
+```bash
+sudo nano /etc/hosts
+```
+Add this line to `/etc/hosts`
+```bash
+34.133.25.217 retrieval.com
+```
+Run `client.py` to request to serving service in GKE cluster.
++ Image query
+```bash
+$ python client.py --save_dir temp.html --image_query your_image_file
+```
++ Text query
+```bash
+$ python client.py --save_dir temp.html --text_query your_text_query
+```
+**Note**: Refresh the html page to display the images
