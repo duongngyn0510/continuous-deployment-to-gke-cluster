@@ -1,3 +1,0 @@
-image:
-  repository: ${registry}
-  tag: v1.${BUILD_NUMBER}

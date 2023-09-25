@@ -20,7 +20,7 @@ pipeline {
                 echo 'Always pass all test unit :D'
             }
         }
-        
+
         stage('Build image') {
             steps {
                 script {
@@ -44,14 +44,15 @@ pipeline {
                     containerTemplate {
                         name 'helm' // Name of the container to be used for helm upgrade
                         image 'duong05102002/jenkins-k8s:latest' // The image containing helm
-                        imagePullPolicy 'Always' // Always pull image in case of using the same tag
                     }
                 }
             }
             steps {
                 script {
+                    steps
                     container('helm') {
-                        sh("helm upgrade --install app ./helm_charts/app --namespace model-serving")
+                        sh("helm upgrade --install app --set image.repository=${registry} \
+                        --set image.tag=${BUILD_NUMBER} ./helm_charts/app --namespace model-serving")
                     }
                 }
             }

@@ -10,7 +10,7 @@ COPY /app /app/app
 
 WORKDIR /app/app
 
-RUN python -m pip install --upgrade pip && pip install -r requirements.txt --cache-dir=/home/lenovo/tmp
+RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install git+https://github.com/openai/CLIP.git
 
 EXPOSE 30000
