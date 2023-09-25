@@ -49,4 +49,4 @@ $ python client.py --save_dir temp.html --image_query your_image_file
 ```bash
 $ python client.py --save_dir temp.html --text_query your_text_query
 ```
-**Note**: Refresh the html page to display the images
+**Note**: Refresh the html page to display the images.
