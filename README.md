@@ -50,18 +50,20 @@ terraform apply
 + GKE cluster is deployed at **us-central1-f** with its node machine type is: **n2-standard-2** (2 CPU, 8 GB RAM and costs 71$/1month).
 + Unable [Autopilot](https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-overview) for the GKE cluster. When using Autopilot cluster, certain features of Standard GKE are not available, such as scraping node metrics from Prometheus service.
 
-It can takes about 10 minutes for create successfully a GKE cluster. You can see that on [GKE UI](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102)
+It can takes about 10 minutes for create successfully a GKE cluster. You can see that on [GKE UI](https://console.cloud.google.com/kubernetes/list)
 
 ![](images/gke_ui.png)
 #### 1.7. Connect to the GKE cluster.
-+ Go back to the [GKE UI](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102).
++ Go back to the [GKE UI](https://console.cloud.google.com/kubernetes/list).
 + Click on vertical ellipsis icon and select **Connect**.
 You will see the popup Connect to the cluster as follows
 ![](images/connect_gke.png)
 + Copy the line `gcloud container clusters get-credentials ...` into your local terminal.
 
 After run this command, the GKE cluster can be connected from local.
-
+```bash
+kubectx [YOUR_GKE_CLUSTER_ID]
+```
 ## 2. Deploy serving service manually
 Using [Helm chart](https://helm.sh/docs/topics/charts/) to deploy application on GKE cluster.
 
