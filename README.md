@@ -4,7 +4,7 @@
 
 ## 1. GKE Cluster
 ### How-to Guide
-#### 1. Using [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) to create GKE cluster.
+#### 1.1. Using [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) to create GKE cluster.
 Update your [project id](https://console.cloud.google.com/projectcreate) in `terraform/variables.tf`
 Run the following commands to create GKE cluster:
 ```bash
@@ -20,7 +20,7 @@ It can takes about 10 minutes for create successfully a GKE cluster. You can see
 
 ![](images/gke_ui.png)
 
-#### 2. Install gcloud CLI
+#### 1.2. Install gcloud CLI
 Gcloud CLI can be installed following this document https://cloud.google.com/sdk/docs/install#deb
 
 Initialize the gcloud CLI
@@ -34,12 +34,12 @@ Y
 
 + Then type Y, type the ID number corresponding to **us-central1-f**, then Enter.
 
-#### 3. Install gke-cloud-auth-plugin
+#### 1.3. Install gke-cloud-auth-plugin
 ```bash
 sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 ```
 
-#### 4. Connect to the GKE cluster.
+#### 1.4. Connect to the GKE cluster.
 + Go back to the [GKE UI](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102).
 + Click on vertical ellipsis icon and select **Connect**.
 You will see the popup Connect to the cluster as follows
@@ -202,7 +202,7 @@ ansible-playbook create_compute_instance.yaml
 
 Go to Settings, select [Metadata](https://console.cloud.google.com/compute/metadata) and add your SSH key.
 
-#### 4.2 Install Docker and Jenkins
+#### 4.2. Install Docker and Jenkins
 
 Update the IP address of the newly created instance and the SSH key for connecting to the Compute Engine in the inventory file. Then run the following commands:
 
