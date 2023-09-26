@@ -5,7 +5,8 @@
 ## 1. Create GKE Cluster
 ### How-to Guide
 
-#### 1.1. Install gcloud CLI
+#### 1.1. Create [Project](https://console.cloud.google.com/projectcreate) in GCP
+#### 1.2. Install gcloud CLI
 Gcloud CLI can be installed following this document https://cloud.google.com/sdk/docs/install#deb
 
 Initialize the gcloud CLI
@@ -17,23 +18,23 @@ Y
 
 + Go back to your terminal, in which you typed `gcloud init`, pick cloud project you using, and Enter.
 
-+ Then type Y, type the ID number corresponding to **us-central1-f**, then Enter.
++ Then type Y, type the ID number corresponding to **us-central1-f** (in my case), then Enter.
 
-#### 1.2. Install gke-cloud-auth-plugin
+#### 1.3. Install gke-cloud-auth-plugin
 ```bash
 sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 ```
 
-#### 1.3. Create service account
-Create your [service account](https://console.cloud.google.com/), and select `Kubernetes Engine Admin` role (Full management of Kubernetes Clusters and their Kubernetes API objects) for your service account.
+#### 1.4. Create service account
+Create your [service account](https://console.cloud.google.com/iam-admin/serviceaccounts), and select `Kubernetes Engine Admin` role (Full management of Kubernetes Clusters and their Kubernetes API objects) for your service account.
 
-Create new key as json type for your service account. Download this json file and save it in `terraform` directory. Update your `credentials`  in `terraform/main.tf`.
+Create new key as json type for your service account. Download this json file and save it in `terraform` directory. Update `credentials` in `terraform/main.tf` with your this json file.
 
-#### 1.4. Add permission for Project
+#### 1.5. Add permission for Project
 Go to [IAM](https://console.cloud.google.com/iam-admin/iam), click on `GRANT ACCESS`, then add new principals, this principal is your service account created in step 1.3. Finally, select `Owner` role.
 ![](images/grant_access.png)
 
-#### 1.5. Using [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) to create GKE cluster.
+#### 1.6. Using [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) to create GKE cluster.
 Update your [project id](https://console.cloud.google.com/projectcreate) in `terraform/variables.tf`
 Run the following commands to create GKE cluster:
 ```bash
