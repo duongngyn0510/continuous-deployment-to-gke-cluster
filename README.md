@@ -65,7 +65,7 @@ After that, nginx ingress controller will be created in `nginx-ingress` namespac
 #### 2.2. Deploy application to GKE cluster manully
 Text-image retrieval service will be deployed with `NodePort` type (nginx ingress will route the request to this service) and 2 replica pods that maintain by `Deployment`.
 
-Each pod contains the container that is running the [text-image retrieval application](https://github.com/duongngyn0510/text-image-retrieval).
+Each pod contains the container running the [text-image retrieval application](https://github.com/duongngyn0510/text-image-retrieval).
 
 The requests will initially arrive at the Nginx Ingress Gateway and will subsequently be routed to the service within the `model-serving` namespace of the GKE cluster.
 
