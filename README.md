@@ -48,7 +48,7 @@ You will see the popup Connect to the cluster as follows
 
 After run this command, the GKE cluster can be connected from local.
 
-## 2. Deploy serving service manully
+## 2. Deploy serving service manually
 Using [Helm chart](https://helm.sh/docs/topics/charts/) to deploy application on GKE cluster.
 
 ### How-to Guide
@@ -62,7 +62,7 @@ helm upgrade --install nginx-ingress-controller .
 ```
 After that, nginx ingress controller will be created in `nginx-ingress` namespace.
 
-#### 2.2. Deploy application to GKE cluster manully
+#### 2.2. Deploy application to GKE cluster manually
 Text-image retrieval service will be deployed with `NodePort` type (nginx ingress will route the request to this service) and 2 replica pods that maintain by `Deployment`.
 
 Each pod contains the container running the [text-image retrieval application](https://github.com/duongngyn0510/text-image-retrieval).
