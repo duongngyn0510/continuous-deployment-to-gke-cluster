@@ -2,25 +2,10 @@
 ## System Architecture
 ![](images/architecture.png)
 
-## 1. GKE Cluster
+## 1. Create GKE Cluster
 ### How-to Guide
-#### 1.1. Using [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) to create GKE cluster.
-Update your [project id](https://console.cloud.google.com/projectcreate) in `terraform/variables.tf`
-Run the following commands to create GKE cluster:
-```bash
-cd terraform
-terraform init
-terraform plan
-terraform apply
-```
-+ GKE cluster is deployed at **us-central1-f** with its node machine type is: **n2-standard-2** (2 CPU, 8 GB RAM and costs 71$/1month).
-+ Unable [Autopilot](https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-overview) for the GKE cluster. When using Autopilot cluster, certain features of Standard GKE are not available, such as scraping node metrics from Prometheus service.
 
-It can takes about 10 minutes for create successfully a GKE cluster. You can see that on [GKE UI](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102)
-
-![](images/gke_ui.png)
-
-#### 1.2. Install gcloud CLI
+#### 1.1. Install gcloud CLI
 Gcloud CLI can be installed following this document https://cloud.google.com/sdk/docs/install#deb
 
 Initialize the gcloud CLI
@@ -34,11 +19,39 @@ Y
 
 + Then type Y, type the ID number corresponding to **us-central1-f**, then Enter.
 
-#### 1.3. Install gke-cloud-auth-plugin
+#### 1.2. Install gke-cloud-auth-plugin
 ```bash
 sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 ```
 
+#### 1.3. Create service account
+Create your [service account](https://console.cloud.google.com/), and select `Kubernetes Engine Admin` role (Full management of Kubernetes Clusters and their Kubernetes API objects) for your service account.
+
+Create new key as json type for your service account. Download this json file and save it in `terraform` directory. Update your `credentials`  in `terraform/main.tf`.
+
+#### 1.4. Add permission for Project
+Go to [IAM](https://console.cloud.google.com/iam-admin/iam), click on `GRANT ACCESS`, then add new principals, this principal is your service account created in step 1.3. Finally, select `Owner` role.
+![](images/grant_access.png)
+
+#### 1.5. Using [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) to create GKE cluster.
+Update your [project id](https://console.cloud.google.com/projectcreate) in `terraform/variables.tf`
+Run the following commands to create GKE cluster:
+```bash
+gcloud auth application-default login
+```
+
+```bash
+cd terraform
+terraform init
+terraform plan
+terraform apply
+```
++ GKE cluster is deployed at **us-central1-f** with its node machine type is: **n2-standard-2** (2 CPU, 8 GB RAM and costs 71$/1month).
++ Unable [Autopilot](https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-overview) for the GKE cluster. When using Autopilot cluster, certain features of Standard GKE are not available, such as scraping node metrics from Prometheus service.
+
+It can takes about 10 minutes for create successfully a GKE cluster. You can see that on [GKE UI](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102)
+
+![](images/gke_ui.png)
 #### 1.4. Connect to the GKE cluster.
 + Go back to the [GKE UI](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102).
 + Click on vertical ellipsis icon and select **Connect**.

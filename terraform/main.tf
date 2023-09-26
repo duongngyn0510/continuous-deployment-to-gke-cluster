@@ -9,10 +9,10 @@ terraform {
 }
 
 provider "google" {
+  credentials = "./mle-course-398013-0ff13b4f23e1.json"
   project     = var.project_id
   region      = var.region
 }
-
 
 // Google Kubernetes Engine
 resource "google_container_cluster" "primary" {
