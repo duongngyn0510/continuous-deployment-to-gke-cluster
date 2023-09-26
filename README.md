@@ -53,7 +53,7 @@ terraform apply
 It can takes about 10 minutes for create successfully a GKE cluster. You can see that on [GKE UI](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102)
 
 ![](images/gke_ui.png)
-#### 1.4. Connect to the GKE cluster.
+#### 1.7. Connect to the GKE cluster.
 + Go back to the [GKE UI](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102).
 + Click on vertical ellipsis icon and select **Connect**.
 You will see the popup Connect to the cluster as follows
