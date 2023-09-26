@@ -12,8 +12,3 @@ variable "k8s" {
   description = "GKE for text_image_retrieval"
   default     = "text-image-retrieval"
 }
-
-variable "vm" {
-  description = "VM instance for text_image_retrieval"
-  default     = "text-image-retrieval"
-}
