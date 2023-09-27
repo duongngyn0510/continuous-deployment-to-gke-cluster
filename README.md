@@ -211,22 +211,30 @@ Create your [service account](https://console.cloud.google.com/), and select [Co
 
 Create new key as json type for your service account. Download this json file and save it in `secret_keys` directory. Update your `project` and `service_account_file` in `ansible/deploy_jenkins/create_compute_instance.yaml`.
 
+![](gifs/create_svc_acc_out.gif)
+
+Go back to your terminal, please execute the following commands:
 ```bash
 cd deploy_jenkins
 ansible-playbook create_compute_instance.yaml
 ```
 
+![](gifs/create_compute_instance.gif)
+
 Go to Settings, select [Metadata](https://console.cloud.google.com/compute/metadata) and add your SSH key.
 
-#### 4.2. Install Docker and Jenkins
+Update the IP address of the newly created instance and the SSH key for connecting to the Compute Engine in the inventory file.
 
-Update the IP address of the newly created instance and the SSH key for connecting to the Compute Engine in the inventory file. Then run the following commands:
+![](gifs/ssh_key_out.gif)
+#### 4.2. Install Docker and Jenkins
 
 ```bash
 cd deploy_jenkins
 ansible-playbook -i ../inventory deploy_jenkins.yml
 ```
 
+Wait a few minutes, if you see the output like this it indicates that Jenkins has been successfully installed on a Compute Engine instance.
+![](images/install_jenkins_vm.png)
 #### 4.3. Connect to Jenkins UI in Compute Engine
 Access the instance using the command:
 ```bash
@@ -236,6 +244,8 @@ Check if jenkins container is already running ?
 ```bash
 sudo docker ps
 ```
+
+![](gifs/connect_vm_out.gif)
 Open web brower and type `your_external_ip:8081` for access Jenkins UI. To Unlock Jenkins, please execute the following commands:
 ```shell
 sudo docker exec -ti jenkins bash
@@ -243,9 +253,47 @@ cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 Copy the password and you can access Jenkins UI.
 
-#### 4.4. Install Kubernetes plugin
+It will take a few minutes for Jenkins to be set up successfully on their Compute Engine instance.
 
-Install the Kubernetes, Docker, Docker Pineline, GCloud SDK Plugins at `Manage Jenkins/Plugins` and set up a connection to GKE by adding the cluster certificate key at `Manage Jenkins/Clouds`.
+![](gifs/connect_jenkins_ui_out.gif)
+
+Create your user ID, and Jenkins will be ready :D
+
+#### 4.5. Setup Jenkins
++ Connect to Github repo
+    + Add Jenkins url to webhooks in Github repo
+
+
+        ![](gifs/add_webhook_out.gif)
+    + Add Github credential to Jenkins (select appropriate scopes for the personal access token)
+
+
+        ![](gifs/connect_github_out.gif)
+
+
++ Add `PINECONE_APIKEY` for connecting to Pinecone Vector DB in the global environment varibles at `Manage Jenkins/System`
+
+
+![](gifs/pinecone_apikey_out.gif)
+
+
++ Add Dockerhub credential to Jenkins at `Manage Jenkins/Credentials`
+
+
+![](gifs/dockerhub_out.gif)
+
++ Install the Kubernetes, Docker, Docker Pineline, GCloud SDK Plugins at `Manage Jenkins/Plugins`. After successful installation, restart the Jenkins container in your Compute Engine instance:
+```bash
+sudo docker restart jenkins
+```
+
+![](gifs/install_plugin_out.gif)
+
+Restart Jenkins container in your Compute Engine instance
+Install the Kubernetes, Docker, Docker Pineline, GCloud SDK Plugins at `Manage Jenkins/Plugins`
+
+
++ Set up a connection to GKE by adding the cluster certificate key at `Manage Jenkins/Clouds`.
 
 ![](images/k8s_jenkins.png)
 
@@ -256,6 +304,9 @@ kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-ad
 
 kubectl create clusterrolebinding cluster-admin-default-binding --clusterrole=cluster-admin --user=system:serviceaccount:model-serving:default
 ```
+
+
+
 
 #### 4.5. Continous deployment
 
