@@ -28,7 +28,7 @@ sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 #### 1.4. Create service account
 Create your [service account](https://console.cloud.google.com/iam-admin/serviceaccounts), and select `Kubernetes Engine Admin` role (Full management of Kubernetes Clusters and their Kubernetes API objects) for your service account.
 
-Create new key as json type for your service account. Download this json file and save it in `terraform` directory. Update `credentials` in `terraform/main.tf` with your this json file.
+Create new key as json type for your service account. Download this json file and save it in `terraform` directory. Update `credentials` in `terraform/main.tf` with your json directory.
 
 #### 1.5. Add permission for Project
 Go to [IAM](https://console.cloud.google.com/iam-admin/iam), click on `GRANT ACCESS`, then add new principals, this principal is your service account created in step 1.3. Finally, select `Owner` role.
@@ -102,7 +102,7 @@ kubectl get ing
 + Add the domain name `retrieval.com` (set up in `helm_charts/app/templates/app_ingress.yaml`) of this IP to `/etc/hosts`
 ```bash
 sudo nano /etc/hosts
-[your ingress IP address] retrieval.com
+[YOUR_INGRESS_IP_ADDRESS] retrieval.com
 ```
 or you can take my ingress IP address
 ```bash
@@ -165,7 +165,7 @@ helm upgrade --install prometheus .
 
 *Warnings about the health of the node and the pod running the application will be alerted to Discord. In this case, the alert will be triggered and sent to Discord when there is only 10% memory available in the node.*
 
-Prometheus UI can be accessed by `[Your NodeIP Address]:30001`
+Prometheus UI can be accessed by `[YOUR_NODEIP_ADDRESS]:30001`
 
 **Note**:
 + Open [Firewall policies](https://console.cloud.google.com/net-security/firewall-manager/firewall-policies) to modify the protocols and ports corresponding to the node `Targets` in a GKE cluster. This will be accept incoming traffic on ports that you specific.
@@ -181,9 +181,9 @@ kubens monitoring
 helm upgrade --install grafana .
 ```
 
-Grafana UI can be accessed by `[Your NodeIP Address]:30000` (with both user and password is `admin`)
+Grafana UI can be accessed by `[YOUR_NODEIP_ADDRESS]:30000` (with both user and password is `admin`)
 
-Add Prometheus connector to Grafana with Prometheus server URL is: `[Your NodeIP Address]:30001`.
+Add Prometheus connector to Grafana with Prometheus server URL is: `[YOUR_NODEIP_ADDRESS]:30001`.
 
 This is some `PromSQL` that you can use for monitoring the health of node and pod:
 + RAM usage of 2 pods that running application
@@ -236,7 +236,7 @@ Wait a few minutes, if you see the output like this it indicates that Jenkins ha
 ### 4.3. Connect to Jenkins UI in Compute Engine
 Access the instance using the command:
 ```bash
-ssh -i ~/.ssh/id_rsa your_username@your_external_ip
+ssh -i ~/.ssh/id_rsa YOUR_USERNAME@YOUR_EXTERNAL_IP
 ```
 Check if jenkins container is already running ?
 ```bash
@@ -244,7 +244,7 @@ sudo docker ps
 ```
 
 ![](gifs/connect_vm_out.gif)
-Open web brower and type `your_external_ip:8081` for access Jenkins UI. To Unlock Jenkins, please execute the following commands:
+Open web brower and type `[YOUR_EXTERNAL_IP]:8081` for access Jenkins UI. To Unlock Jenkins, please execute the following commands:
 ```shell
 sudo docker exec -ti jenkins bash
 cat /var/jenkins_home/secrets/initialAdminPassword
