@@ -202,7 +202,7 @@ rate(container_cpu_usage_seconds_total{container='app', namespace='model-serving
 
 ## 4. Continous deployment to GKE using Jenkins pipeline
 
-Jenkins is deployed on Google Compute Engine (create Google Compute instance using [ansible](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html)) with a machine type is **n1-standard-2**.
+Jenkins is deployed on Google Compute Engine using [Ansible](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html) with a machine type is **n1-standard-2**.
 
 ### 4.1. Spin up your instance
 Create your [service account](https://console.cloud.google.com/), and select [Compute Admin](https://cloud.google.com/compute/docs/access/iam#compute.admin) role (Full control of all Compute Engine resources) for your service account.
@@ -211,7 +211,7 @@ Create new key as json type for your service account. Download this json file an
 
 ![](gifs/create_svc_acc_out.gif)
 
-Go back to your terminal, please execute the following commands:
+Go back to your terminal, please execute the following commands to create the Compute Engine instance:
 ```bash
 cd deploy_jenkins
 ansible-playbook create_compute_instance.yaml
