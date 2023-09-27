@@ -304,8 +304,7 @@ kubectl create clusterrolebinding cluster-admin-default-binding --clusterrole=cl
 
 #### 4.4.6. Install Helm on Jenkins to enable application deployment to GKE cluster.
 
-+ You can use the `Dockerfile-jenkins-k8s` to build a new Docker image. After that, push this newly created image to Dockerhub. finally replace the image reference at `containerTemplate` in `Jenkinsfile`
-+ Or you can reuse my image `duong05102002/jenkins-k8s:latest`
++ You can use the `Dockerfile-jenkins-k8s` to build a new Docker image. After that, push this newly created image to Dockerhub. Finally replace the image reference at `containerTemplate` in `Jenkinsfile` or you can reuse my image `duong05102002/jenkins-k8s:latest`
 
 
 ### 4.6. Continous deployment
