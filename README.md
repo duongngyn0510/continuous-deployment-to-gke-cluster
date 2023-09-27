@@ -204,9 +204,7 @@ rate(container_cpu_usage_seconds_total{container='app', namespace='model-serving
 
 Jenkins is deployed on Google Compute Engine (create Google Compute instance using [ansible](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html)) with a machine type is **n1-standard-2**.
 
-### How-to Guide
-
-#### 4.1. Spin up your instance
+### 4.1. Spin up your instance
 Create your [service account](https://console.cloud.google.com/), and select [Compute Admin](https://cloud.google.com/compute/docs/access/iam#compute.admin) role (Full control of all Compute Engine resources) for your service account.
 
 Create new key as json type for your service account. Download this json file and save it in `secret_keys` directory. Update your `project` and `service_account_file` in `ansible/deploy_jenkins/create_compute_instance.yaml`.
@@ -226,7 +224,7 @@ Go to Settings, select [Metadata](https://console.cloud.google.com/compute/metad
 Update the IP address of the newly created instance and the SSH key for connecting to the Compute Engine in the inventory file.
 
 ![](gifs/ssh_key_out.gif)
-#### 4.2. Install Docker and Jenkins
+### 4.2. Install Docker and Jenkins
 
 ```bash
 cd deploy_jenkins
@@ -235,7 +233,7 @@ ansible-playbook -i ../inventory deploy_jenkins.yml
 
 Wait a few minutes, if you see the output like this it indicates that Jenkins has been successfully installed on a Compute Engine instance.
 ![](images/install_jenkins_vm.png)
-#### 4.3. Connect to Jenkins UI in Compute Engine
+### 4.3. Connect to Jenkins UI in Compute Engine
 Access the instance using the command:
 ```bash
 ssh -i ~/.ssh/id_rsa your_username@your_external_ip
@@ -259,43 +257,40 @@ It will take a few minutes for Jenkins to be set up successfully on their Comput
 
 Create your user ID, and Jenkins will be ready :D
 
-#### 4.5. Setup Jenkins
-+ Connect to Github repo
-    + Add Jenkins url to webhooks in Github repo
+### 4.4. Setup Jenkins
+#### 4.4.1. Connect to Github repo
++ Add Jenkins url to webhooks in Github repo
+
+![](gifs/add_webhook_out.gif)
++ Add Github credential to Jenkins (select appropriate scopes for the personal access token)
 
 
-        ![](gifs/add_webhook_out.gif)
-    + Add Github credential to Jenkins (select appropriate scopes for the personal access token)
+![](gifs/connect_github_out.gif)
 
 
-        ![](gifs/connect_github_out.gif)
-
-
-+ Add `PINECONE_APIKEY` for connecting to Pinecone Vector DB in the global environment varibles at `Manage Jenkins/System`
+#### 4.4.2. Add `PINECONE_APIKEY` for connecting to Pinecone Vector DB in the global environment varibles at `Manage Jenkins/System`
 
 
 ![](gifs/pinecone_apikey_out.gif)
 
 
-+ Add Dockerhub credential to Jenkins at `Manage Jenkins/Credentials`
+#### 4.4.3. Add Dockerhub credential to Jenkins at `Manage Jenkins/Credentials`
 
 
 ![](gifs/dockerhub_out.gif)
 
-+ Install the Kubernetes, Docker, Docker Pineline, GCloud SDK Plugins at `Manage Jenkins/Plugins`. After successful installation, restart the Jenkins container in your Compute Engine instance:
+
+#### 4.4.4. Install the Kubernetes, Docker, Docker Pineline, GCloud SDK Plugins at `Manage Jenkins/Plugins`
+
+After successful installation, restart the Jenkins container in your Compute Engine instance:
 ```bash
 sudo docker restart jenkins
 ```
 
 ![](gifs/install_plugin_out.gif)
 
-Restart Jenkins container in your Compute Engine instance
-Install the Kubernetes, Docker, Docker Pineline, GCloud SDK Plugins at `Manage Jenkins/Plugins`
 
-
-+ Set up a connection to GKE by adding the cluster certificate key at `Manage Jenkins/Clouds`.
-
-![](images/k8s_jenkins.png)
+#### 4.4.5. Set up a connection to GKE by adding the cluster certificate key at `Manage Jenkins/Clouds`.
 
 Don't forget to grant permissions to the service account which is trying to connect to our cluster by the following command:
 
@@ -305,16 +300,39 @@ kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-ad
 kubectl create clusterrolebinding cluster-admin-default-binding --clusterrole=cluster-admin --user=system:serviceaccount:model-serving:default
 ```
 
+![](gifs/connect_gke_out.gif)
+
+#### 4.4.6. Install Helm on Jenkins to enable application deployment to GKE cluster.
+
++ You can use the `Dockerfile-jenkins-k8s` to build a new Docker image. After that, push this newly created image to Dockerhub. finally replace the image reference at `containerTemplate` in `Jenkinsfile`
++ Or you can reuse my image `duong05102002/jenkins-k8s:latest`
 
 
-
-#### 4.5. Continous deployment
-
-Install **Helm** on Jenkins using the `Dockerfile-jenkins-k8s` to enable application deployment on GKE cluster. After that, push this image to Dockerhub or you can reuse my image `duong05102002/jenkins-k8s:latest`
+### 4.6. Continous deployment
+Create `model-serving` namespace first in your GKE cluster
+```bash
+kubectl create ns model-serving
+```
 
 The CI/CD pipeline will consist of three stages:
 + Tesing model correctness.
 + Building the image, and pushing the image to Docker Hub.
 + Finally, it will deploy the application with the latest image from DockerHub to GKE cluster.
 
-![](images/jenkins_cicd.png)
+![](gifs/run_cicd_out.gif)
+
+
+The pipeline will take about 8 minutes. You can confirm the successful deployment of the application to the GKE cluster if you see the following output in the pipeline log:
+![](images/deploy_successfully_2gke.png)
+
+Here is the Stage view in Jenkins pipeline:
+
+![](images/pipeline.png)
+
+Check whether the pods have been deployed successfully in the `models-serving`` namespace.
+
+![](gifs/get_pod_out.gif)
+
+Test the API
+
+![](gifs/test_api_out.gif)
