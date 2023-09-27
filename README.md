@@ -329,7 +329,7 @@ Here is the Stage view in Jenkins pipeline:
 
 ![](images/pipeline.png)
 
-Check whether the pods have been deployed successfully in the `models-serving`` namespace.
+Check whether the pods have been deployed successfully in the `models-serving` namespace.
 
 ![](gifs/get_pod_out.gif)
 
