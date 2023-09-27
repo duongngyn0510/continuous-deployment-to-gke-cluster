@@ -200,7 +200,7 @@ rate(container_cpu_usage_seconds_total{container='app', namespace='model-serving
 + Node usage
 ![](images/node_metrics.png)
 
-## 4. Continous deployment to GKE using Jenkins pipeline
+## 4. Continuous deployment to GKE using Jenkins pipeline
 
 Jenkins is deployed on Google Compute Engine using [Ansible](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html) with a machine type is **n1-standard-2**.
 
@@ -307,7 +307,7 @@ kubectl create clusterrolebinding cluster-admin-default-binding --clusterrole=cl
 + You can use the `Dockerfile-jenkins-k8s` to build a new Docker image. After that, push this newly created image to Dockerhub. Finally replace the image reference at `containerTemplate` in `Jenkinsfile` or you can reuse my image `duong05102002/jenkins-k8s:latest`
 
 
-### 4.6. Continous deployment
+### 4.6. Continuous deployment
 Create `model-serving` namespace first in your GKE cluster
 ```bash
 kubectl create ns model-serving
