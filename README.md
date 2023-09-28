@@ -104,7 +104,7 @@ kubectl get ing
 sudo nano /etc/hosts
 [YOUR_INGRESS_IP_ADDRESS] retrieval.com
 ```
-or you can take my ingress IP address
+or you can utilize my Ingress IP address (valid until 27/11/2023 during the free trial period).
 ```bash
 34.133.25.217 retrieval.com
 ```
