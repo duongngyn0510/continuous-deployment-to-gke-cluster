@@ -1,7 +1,33 @@
 # Continuous deployment [text image retrieval service](https://github.com/duongngyn0510/text-image-retrieval) to [Google Kubernetes Engine](https://console.cloud.google.com/kubernetes/list/overview?project=striking-decker-399102) using CI/CD
 ## System Architecture
 ![](images/architecture.png)
+# Table of Contents
 
+1. [Create GKE Cluster](#1-create-gke-clusterCreate-GKE-Cluster)
+2. [Deploy serving service manually](#2-deploy-serving-service-manually)
+
+    1. [Deploy nginx ingress controller](#21-deploy-nginx-ingress-controller)
+
+    2. [Deploy application](#22-deploy-application-to-gke-cluster-manually)
+
+3. [Deploy monitoring service](#3-deploy-monitoring-service)
+
+    1. [Deploy Prometheus service](#31-deploy-prometheus-service)
+
+    2. [Deploy Grafana service](#32-deploy-grafana-service)
+
+
+4. [Continuous deployment to GKE using Jenkins pipeline](#4-continuous-deployment-to-gke-using-jenkins-pipeline)
+
+    1. [Create Google Compute Engine](#41-spin-up-your-instance)
+
+    2. [Install Docker and Jenkins in GCE](#42-install-docker-and-jenkins)
+
+    3. [Connect to Jenkins UI in GCE](#43-connect-to-jenkins-ui-in-compute-engine)
+
+    4. [Setup Jenkins](#44-setup-jenkins)
+
+    5. [Continuous deployment](#45-continuous-deployment)
 ## 1. Create GKE Cluster
 ### How-to Guide
 
@@ -69,7 +95,7 @@ Using [Helm chart](https://helm.sh/docs/topics/charts/) to deploy application on
 
 ### How-to Guide
 
-#### 2.1. Create nginx ingress controller
+#### 2.1. Deploy nginx ingress controller
 ```bash
 cd helm_charts/nginx_ingress
 kubectl create ns nginx-ingress
@@ -139,7 +165,7 @@ or you can utilize my Ingress IP address (valid until 27/11/2023 during the free
                         </body>
                     </html>
 
-## 3. Monitoring Service
+## 3. Deploy monitoring service
 I'm using Prometheus and Grafana for monitoring the health of both Node and pods that running application.
 
 Prometheus will scrape metrics from both Node and pods in GKE cluster. Subsequently, Grafana will display information such as CPU and RAM usage for system health monitoring, and system health alerts will be sent to Discord.
@@ -224,7 +250,7 @@ Go to Settings, select [Metadata](https://console.cloud.google.com/compute/metad
 Update the IP address of the newly created instance and the SSH key for connecting to the Compute Engine in the inventory file.
 
 ![](gifs/ssh_key_out.gif)
-### 4.2. Install Docker and Jenkins
+### 4.2. Install Docker and Jenkins in GCE
 
 ```bash
 cd deploy_jenkins
@@ -307,7 +333,7 @@ kubectl create clusterrolebinding cluster-admin-default-binding --clusterrole=cl
 + You can use the `Dockerfile-jenkins-k8s` to build a new Docker image. After that, push this newly created image to Dockerhub. Finally replace the image reference at `containerTemplate` in `Jenkinsfile` or you can reuse my image `duong05102002/jenkins-k8s:latest`
 
 
-### 4.6. Continuous deployment
+### 4.5. Continuous deployment
 Create `model-serving` namespace first in your GKE cluster
 ```bash
 kubectl create ns model-serving
