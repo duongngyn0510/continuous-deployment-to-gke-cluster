@@ -239,7 +239,7 @@ Create new key as json type for your service account. Download this json file an
 
 Go back to your terminal, please execute the following commands to create the Compute Engine instance:
 ```bash
-cd deploy_jenkins
+cd ansible/deploy_jenkins
 ansible-playbook create_compute_instance.yaml
 ```
 
@@ -253,8 +253,8 @@ Update the IP address of the newly created instance and the SSH key for connecti
 ### 4.2. Install Docker and Jenkins in GCE
 
 ```bash
-cd deploy_jenkins
-ansible-playbook -i ../inventory deploy_jenkins.yml
+cd ansible/deploy_jenkins
+ansible-playbook -i ../inventory deploy_jenkins.yaml
 ```
 
 Wait a few minutes, if you see the output like this it indicates that Jenkins has been successfully installed on a Compute Engine instance.
