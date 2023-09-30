@@ -315,6 +315,8 @@ kubectl create ns model-serving
 
 The CI/CD pipeline will consist of three stages:
 + Tesing model correctness.
+    + Replace the new pretrained model in `app/main.py`. I recommend accessing the pretrained model by downloading it from another storage, such as Google Drive or Hugging Face.
+    + If you store the pretrained model directly in a directory and copy it to the Docker image during the application build, it may consume a significant amount of resource space (RAM) in the pod. This can result in pods not being started successfully.
 + Building the image, and pushing the image to Docker Hub.
 + Finally, it will deploy the application with the latest image from DockerHub to GKE cluster.
 
