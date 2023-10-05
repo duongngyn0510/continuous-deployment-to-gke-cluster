@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = "./mle-course-398013-0ff13b4f23e1.json"
+  credentials = "./language-translate-401102-fd13760fdd20.json"
   project     = var.project_id
   region      = var.region
 }

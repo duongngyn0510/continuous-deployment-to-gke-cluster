@@ -1,6 +1,6 @@
 variable "project_id" {
   description = "The project ID to host the cluster in"
-  default     = "mle-course-398013"
+  default     = "language-translate-401102"
 }
 
 variable "region" {
@@ -9,6 +9,6 @@ variable "region" {
 }
 
 variable "k8s" {
-  description = "GKE for text_image_retrieval"
-  default     = "text-image-retrieval"
+  description = "GKE for simple mlops"
+  default     = "mlops-gke"
 }
