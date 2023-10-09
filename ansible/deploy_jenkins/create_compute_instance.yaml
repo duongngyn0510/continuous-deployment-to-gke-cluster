@@ -7,9 +7,9 @@
         size_gb: 50
         source_image: projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230727
         zone: us-central1-f
-        project: mle-course-398013
+        project: language-translate-401102
         auth_kind: serviceaccount
-        service_account_file: ../secret_keys/mle-course-398013-80ecbd13cd59.json
+        service_account_file: ../secret_keys/language-translate-401102-c2cc5fa0e19e.json
         state: present
       register: disk
 
@@ -18,9 +18,9 @@
         name: jenkins-instance
         machine_type: n1-standard-2
         zone: us-central1-f
-        project: mle-course-398013
+        project: language-translate-401102
         auth_kind: serviceaccount
-        service_account_file: ../secret_keys/mle-course-398013-80ecbd13cd59.json
+        service_account_file: ../secret_keys/language-translate-401102-c2cc5fa0e19e.json
         disks:
         - auto_delete: 'true'
           boot: 'true'
@@ -52,6 +52,6 @@
           - 0.0.0.0/0 
         direction: INGRESS 
         description: Allow incoming traffic on port 50000 and 8081 (Jenkins UI)
-        project: mle-course-398013
+        project: language-translate-401102
         auth_kind: serviceaccount
-        service_account_file: ../secret_keys/mle-course-398013-80ecbd13cd59.json
+        service_account_file: ../secret_keys/language-translate-401102-c2cc5fa0e19e.json

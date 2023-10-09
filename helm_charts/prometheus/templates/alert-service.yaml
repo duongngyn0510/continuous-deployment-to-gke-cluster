@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: alertmanager
-  namespace: monitoring
+  namespace: monitor
   annotations:
       prometheus.io/scrape: 'true'
       prometheus.io/port:   '9093'

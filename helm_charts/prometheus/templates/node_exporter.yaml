@@ -5,7 +5,7 @@ metadata:
   labels:
     app: node-exporter
   name: node-exporter
-  namespace: monitoring
+  namespace: monitor
 spec:
   selector:
     matchLabels:
@@ -68,7 +68,7 @@ metadata:
   labels:
     app: node-exporter
   name: node-exporter
-  namespace: monitoring
+  namespace: monitor
 spec:
   ports:
   - name: node-exporter
@@ -87,7 +87,7 @@ metadata:
     app: node-exporter
     serviceMonitorSelector: prometheus
   name: node-exporter
-  namespace: monitoring
+  namespace: monitor
 spec:
   endpoints:
   - honorLabels: true
